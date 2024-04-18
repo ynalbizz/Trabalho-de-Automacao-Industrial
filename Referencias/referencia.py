@@ -51,8 +51,7 @@ while True:
             print(f'H2 = {fingers2.count(1)}', end=" ")
 
             # Calculate distance between the index fingers of both hands and draw it on the image
-            length, info, img = detector.findDistance(lmList1[8][0:2], lmList2[8][0:2], img, color=(255, 0, 0),
-                                                      scale=10)
+            length, info, img = detector.findDistance(lmList1[8][0:2], lmList2[8][0:2], img, color=(255, 0, 0),scale=10)
             
 
         print(" ")  # New line for better readability of the printed output

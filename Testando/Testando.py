@@ -1,16 +1,13 @@
+import definindo_gestos as gestoslib
 from cvzone.HandTrackingModule import HandDetector
 import cv2
-from pynput.keyboard import Key, Controller
-import serial
-from time import sleep#delay for communication
 
 # Initialize the webcam to capture video
 # The '2' indicates the third camera connected to your computer; '0' would usually refer to the built-in camera
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 # Initialize the HandDetector class with the given parameters
-detector = HandDetector(staticMode=False, maxHands=2, modelComplexity=1, detectionCon=0.5, minTrackCon=0.5)
-
+detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 # Continuously get frames from the webcam
 while True:
     # Capture each frame from the webcam
@@ -30,6 +27,12 @@ while True:
         bbox1 = hand1["bbox"]  # Bounding box around the first hand (x,y,w,h coordinates)
         center1 = hand1['center']  # Center coordinates of the first hand
         handType1 = hand1["type"]  # Type of the first hand ("Left" or "Right")
+        fingers1 = detector.fingersUp(hand1)
+        gestoslib.controller(handType1,fingers1)
+        length, info, img = detector.findDistance(lmList1[8][0:2], lmList1[4][0:2], img, color=(255, 0, 255),scale=10)#calculate distance between two fingers of hand 1
+        print("Mão 1:", end=" ")
+        print(fingers1, end="  /  ")#print an array of fingers up and down
+        print(length)
 
 
         # Check if a second hand is detected
@@ -40,6 +43,15 @@ while True:
             bbox2 = hand2["bbox"]
             center2 = hand2['center']
             handType2 = hand2["type"]
+            fingers2 = detector.fingersUp(hand2)
+            gestoslib.controller(handType2,fingers2)
+            length, info, img = detector.findDistance(lmList2[8][0:2], lmList2[4][0:2], img, color=(255, 0, 255),scale=10)#calculate distance between two fingers of hand 2
+            print("Mão 2:", end=" ")
+            print(fingers2, end="  /  ")#print an array of fingers up and down
+            print(length)
+
+            # Calculate distance between the index fingers of both hands and draw it on the image
+            length, info, img = detector.findDistance(lmList1[8][0:2], lmList2[8][0:2], img, color=(255, 0, 0),scale=10)
 
         print(" ")  # New line for better readability of the printed output
 
