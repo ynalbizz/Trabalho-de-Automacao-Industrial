@@ -28,11 +28,8 @@ while True:
         center1 = hand1['center']  # Center coordinates of the first hand
         handType1 = hand1["type"]  # Type of the first hand ("Left" or "Right")
         fingers1 = detector.fingersUp(hand1)
-        gestoslib.controller(handType1,fingers1)
         length, info, img = detector.findDistance(lmList1[8][0:2], lmList1[4][0:2], img, color=(255, 0, 255),scale=10)#calculate distance between two fingers of hand 1
-        print("Mão 1:", end=" ")
-        print(fingers1, end="  /  ")#print an array of fingers up and down
-        print(length)
+        gestoslib.OneHandcontroller(handType1,fingers1,length)
 
 
         # Check if a second hand is detected
@@ -44,14 +41,13 @@ while True:
             center2 = hand2['center']
             handType2 = hand2["type"]
             fingers2 = detector.fingersUp(hand2)
-            gestoslib.controller(handType2,fingers2)
             length, info, img = detector.findDistance(lmList2[8][0:2], lmList2[4][0:2], img, color=(255, 0, 255),scale=10)#calculate distance between two fingers of hand 2
-            print("Mão 2:", end=" ")
-            print(fingers2, end="  /  ")#print an array of fingers up and down
-            print(length)
-
+            
             # Calculate distance between the index fingers of both hands and draw it on the image
-            length, info, img = detector.findDistance(lmList1[8][0:2], lmList2[8][0:2], img, color=(255, 0, 0),scale=10)
+            lengthbetween, info, img = detector.findDistance(lmList1[8][0:2], lmList2[8][0:2], img, color=(255, 0, 0),scale=10)
+
+            gestoslib.TwoHandcontroller(handType2,fingers2,length,lengthbetween)
+
 
         print(" ")  # New line for better readability of the printed output
 
