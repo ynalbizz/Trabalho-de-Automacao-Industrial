@@ -4,7 +4,7 @@ def OneHandcontroller(mao,dedos,dist_entreIeP):
     if(mao == "Right"):
         # Adiciona lógica para ligar o LED quando o gesto for detectado
         if(dedos == [0, 1, 0, 0, 0]):
-            #c.write(b'L')
+            
             print("Rg1")
         if(dedos == [0, 1, 1, 0, 0]):
             #c.write(b'A')
@@ -25,8 +25,10 @@ def TwoHandcontroller(mao,dedos,dist_entreIeP,dist_entreMaos):
     OneHandcontroller(mao,dedos,dist_entreIeP)
 
     #Adiciona novos gestos Exclusivos para Duas 
-    if(dist_entreMaos >= 50):
+    if(dist_entreMaos >= 100):
       print("Voce é foda")
 
 
     print("Chegou as Duas")
+
+    #arroz00000000000000000000000000000000
