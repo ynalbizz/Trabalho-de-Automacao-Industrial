@@ -30,3 +30,5 @@ def TwoHandcontroller(mao,dedos,dist_entreIeP,dist_entreMaos):
 
 
     print("Chegou as Duas")
+
+#pega esaa
