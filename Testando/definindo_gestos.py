@@ -1,4 +1,4 @@
-def OneHandcontroller(mao,dedos,dist_entreIeP):
+def OneHandcontroller(mao,dedos,dist_entreIeP,maoPos):
 
     #Delimita a detecção dos gestos referente a mão direita
     if(mao == "Right"):
@@ -20,9 +20,9 @@ def OneHandcontroller(mao,dedos,dist_entreIeP):
             #c.write(b'B')
             print("Lg2")
 
-def TwoHandcontroller(mao,dedos,dist_entreIeP,dist_entreMaos):
+def TwoHandcontroller(mao,dedos,dist_entreIeP,dist_entreMaos,maoPos):
     #Lê os Gestos da Nova mão
-    OneHandcontroller(mao,dedos,dist_entreIeP)
+    OneHandcontroller(mao,dedos,dist_entreIeP,maoPos)
 
     #Adiciona novos gestos Exclusivos para Duas 
     if(dist_entreMaos >= 100):
