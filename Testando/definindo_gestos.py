@@ -1,4 +1,8 @@
-def OneHandcontroller(mao,dedos,dist_entreIeP,maoPos):
+import AuxiliarLib as aux
+
+
+
+def OneHandcontroller(mao,dedos,dist_entreIeP,maoPos,area):
 
     #Delimita a detecção dos gestos referente a mão direita
     if(mao == "Right"):
@@ -9,6 +13,13 @@ def OneHandcontroller(mao,dedos,dist_entreIeP,maoPos):
         if(dedos == [0, 1, 1, 0, 0]):
             #c.write(b'A')
             print("Rg2")
+        
+       
+    if aux.HandLocationVerifiying(maoPos,area[0].Infos()) == True:
+
+        print("É DENTU")
+          
+      
 
     #Delimita a detecção dos gestos referente a mão esquerda
     if(mao == "Left"):
@@ -20,15 +31,12 @@ def OneHandcontroller(mao,dedos,dist_entreIeP,maoPos):
             #c.write(b'B')
             print("Lg2")
 
-def TwoHandcontroller(mao,dedos,dist_entreIeP,dist_entreMaos,maoPos):
+def TwoHandcontroller(mao,dedos,dist_entreIeP,dist_entreMaos,maoPos,area):
     #Lê os Gestos da Nova mão
-    OneHandcontroller(mao,dedos,dist_entreIeP,maoPos)
+    OneHandcontroller(mao,dedos,dist_entreIeP,maoPos,area)
 
     #Adiciona novos gestos Exclusivos para Duas 
     if(dist_entreMaos >= 100):
-      print("Voce é foda")
-
-
-    print("Chegou as Duas")
+      True
 
 #pega esaa
