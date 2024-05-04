@@ -1,4 +1,8 @@
 import cv2
+import matplotlib.pyplot as plt
+import time
+
+# Initial setup
 
 
 def printinfos(variabels):
@@ -50,5 +54,31 @@ class Area:
         if self._isHandInside(handPos):
             self.action()
 
+
+class Graph:
+    def __init__(self,title):
+        self.fig, self.ax = plt.subplots(facecolor=("#eeeee4"))
+        self.times = []
+        self.ydata = []
+        (self.start_time, self.line) = (time.time(), self.ax.plot(self.times, self.ydata, 'r')[0])
+
+        self.fig.suptitle(title)
+    def plotGraph_Y_byTime(self,y):
+
+        if y:
+            current_time = time.time() - self.start_time  # Time elapsed since start
+            self.times.append(current_time)
+            self.ydata.append(y)
+
+            self.line.set_xdata(self.times)
+            self.line.set_ydata(self.ydata)
+
+            self.ax.relim()  # Recalculate limits
+            self.ax.autoscale_view(True, True, True)  # Rescale axis to fit data
+            plt.draw()  # Redraw the current figure
+            plt.pause(0.1)
+
+            return
+    plt.pause(0.1)
 
 
