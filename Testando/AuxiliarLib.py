@@ -14,7 +14,7 @@ def HandLocationVerifiying(handPos,area):
 
 
 class Area:
-    def __init__(self,centerpos,width,height,img):
+    def __init__(self,centerpos,width,height,img, action):
         self.img = img
         self.width = width
         self.height = height
@@ -23,6 +23,7 @@ class Area:
         end =(centerpos[0]+width,centerpos[1]+height)
         self.origin = origin
         self.end = end
+        self.action = action
 
     def Infos(self, info="all"):
 
@@ -42,5 +43,14 @@ class Area:
         
         colorR=(255, 0, 255)
         cv2.rectangle(self.img,self.origin,self.end,colorR,2)
- 
+
+    def _isHandInside(self, handPos):
+        return self.origin[0] <= handPos[0] <= self.end[0] and self.origin[1] <= handPos[1] <= self.end[1]
+
+    def execute(self, handPos):
+        if(self._isHandInside(handPos)):
+            self.action()
+    
+
+    
 

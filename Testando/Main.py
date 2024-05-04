@@ -22,8 +22,8 @@ while True:
 
     area = [
     #lista de Areas
-        aux.Area((300,300),50,50,img),
-        aux.Area((150,150),100,100,img)
+        aux.Area((300,300),50,50,img, lambda : print("ag1")),
+        aux.Area((150,150),100,100,img, lambda : print("ag2"))
     ]
 
     area[1].DrawArea()
@@ -50,12 +50,8 @@ while True:
     if len(hands) == 2:
         # Calculate distance between the index fingers of both hands and draw it on the image
         lengthbetween, info, img = detector.findDistance(hands[0]["lmList"][8][0:2], hands[1]["lmList"][8][0:2], img, color=(255, 0, 0),scale=10)
+        gestoslib.TwoHandcontroller(lengthbetween)
 
-        # REFAZER FUNCAO DE GESTOS DE DUAS MAOS 
-        # try:
-        #     gestoslib.TwoHandcontroller(handType2,fingers2,length,lengthbetween,center2,area)
-        # except Exception as erro:
-        #     print(erro)
 
         print(" ")  # New line for better readability of the printed output
 
