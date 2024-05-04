@@ -1,4 +1,4 @@
-import GesturesLibrary as gestoslib
+import GesturesLibrary as GestLib
 from cvzone.HandTrackingModule import HandDetector
 import cv2
 import AuxiliarLibrary as Aux
@@ -25,7 +25,7 @@ while True:
         Aux.Area((150, 150), 100, 100, img, lambda: print("ag2"))
     ]
 
-    area[1].DrawArea()
+    area[1].drawArea()
     # Find hands in the current frame
     # The 'draw' parameter draws landmarks and hand outlines on the image if set to True
     # The 'flipType' parameter flips the image, making it easier for some detections
@@ -43,13 +43,13 @@ while True:
         # calculate distance between two fingers of hand 1
         length, info, img = detector.findDistance(lmList1[8][0:2], lmList1[4][0:2], img, color=(255, 0, 255), scale=10)
        
-        gestoslib.onehandcontroller(handType1, fingers1, length, center1, area)
+        GestLib.onehandcontroller(handType1, fingers1, length, center1, area)
 
     # Check if a second hand is detected
     if len(hands) == 2:
         # Calculate distance between the index fingers of both hands and draw it on the image
         lengthbetween, info, img = detector.findDistance(hands[0]["lmList"][8][0:2], hands[1]["lmList"][8][0:2], img, color=(255, 0, 0), scale=10)
-        gestoslib.twohandcontroller(lengthbetween)
+        GestLib.twohandcontroller(lengthbetween)
 
         print(" ")  # New line for better readability of the printed output
 
