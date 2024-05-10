@@ -15,7 +15,7 @@ detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 graph = Aux.Graph("Teste")
 
 devices = [
-Aux.Dispositivo("ip","port","ventilador")
+Aux.Dispositivo("192.168.0.110",1234,"ventilador")
 
 
 ]

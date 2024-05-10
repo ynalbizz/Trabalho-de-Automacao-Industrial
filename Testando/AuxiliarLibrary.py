@@ -3,11 +3,6 @@ import matplotlib.pyplot as plt
 import time
 import socket
 
-
-
-
-#Conecta ao ESP32
-
 # Initial setup
 
 
@@ -91,12 +86,12 @@ class Graph:
 class Dispositivo:
     def __init__(self,esp_ip,port,device_name):
         self.name = device_name
-        self.ip = esp_ip
+        self.ip = str(esp_ip)
         self.port = port
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client_socket.connect((esp_ip,port))
-    def infos(self):
+    def infos(self,search):
         infos = {"ip": self.ip,"port": self.port,"name": self.name}
-
+        return infos[search]
     def execute(self,command):
         self.client_socket.send(command.encode())
