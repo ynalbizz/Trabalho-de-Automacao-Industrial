@@ -14,6 +14,11 @@ detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 # Creating Graph Base and configs to debugging
 graph = Aux.Graph("Teste")
 
+devices = [
+Aux.Dispositivo("ip","port","ventilador")
+
+
+]
 
 # Continuously get frames from the webcam
 while True:
@@ -26,8 +31,8 @@ while True:
 
     area = [
         # lista de Areas
-        Aux.Area((300, 300), 50, 50, img, lambda: print("ag1")),
-        Aux.Area((150, 150), 100, 100, img, lambda: print("ag2"))
+        Aux.Area((100, 100), 100, 100, img,"ligar",)
+
     ]
 
     for i in area:
@@ -51,10 +56,10 @@ while True:
         length, info, img = detector.findDistance(lmList1[8][0:2], lmList1[4][0:2], img, color=(255, 0, 255), scale=10)
 
         # Pick up data, and plot the graph
-        graph.plotGraph_Y_byTime(length)
+        #graph.plotGraph_Y_byTime(length)
 
         # Check if the hand was made some gesture
-        GestLib.onehandcontroller(handType1, fingers1, length, center1, area)
+        GestLib.onehandcontroller(handType1, fingers1, length, center1, area,devices)
 
 
     # Check if a second hand was detected

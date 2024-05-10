@@ -1,4 +1,5 @@
-def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas):
+
+def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas,devices):
 
     # Delimita a detecção dos gestos referente a mão direita
     if hand == "Right":
@@ -11,7 +12,16 @@ def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas):
             print("Rg2")
 
     for area in areas:
-        area.execute(handpos)
+        try:
+            arearesult = area.execute(handpos)
+
+            if arearesult[2]:
+                for device in devices:
+                    if device.infos["name"] == arearesult(1):
+                        device.execute(arearesult[0])
+
+        except Exception as erro:
+            print(erro)
 
     # Delimita a detecção dos gestos referente a mão esquerda
     if hand == "Left":

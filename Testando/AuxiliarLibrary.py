@@ -1,6 +1,12 @@
 import cv2
 import matplotlib.pyplot as plt
 import time
+import socket
+
+
+
+
+#Conecta ao ESP32
 
 # Initial setup
 
@@ -18,7 +24,7 @@ def handlocationverifiying(handPos, area):
 
 
 class Area:
-    def __init__(self, centerpos, width, height, img, action):
+    def __init__(self, centerpos, width, height, img, action,device):
         self.img = img
         self.width = width
         self.height = height
@@ -28,6 +34,7 @@ class Area:
         self.origin = origin
         self.end = end
         self.action = action
+        self.device = device
 
     def infos(self, info="all"):
 
@@ -52,7 +59,7 @@ class Area:
 
     def execute(self, handPos):
         if self._isHandInside(handPos):
-            self.action()
+            return (str(self.action).lower(), self.device, True)
 
 
 class Graph:
@@ -81,4 +88,15 @@ class Graph:
             return
     plt.pause(0.1)
 
+class Dispositivo:
+    def __init__(self,esp_ip,port,device_name):
+        self.name = device_name
+        self.ip = esp_ip
+        self.port = port
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.client_socket.connect((esp_ip,port))
+    def infos(self):
+        infos = {"ip": self.ip,"port": self.port,"name": self.name}
 
+    def execute(self,command):
+        self.client_socket.send(command.encode())
