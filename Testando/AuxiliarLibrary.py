@@ -94,7 +94,17 @@ class Dispositivo:
         infos = {"ip": self.ip,"port": self.port,"name": self.name}
         return infos[search]
     def execute(self,command):
-        self.client_socket.send(command.encode())
+        comando = input("Digite 'ligar' para ligar o LED ou 'desligar' para desligar o LED: ").lower()
+
+        # Envia o comando para o ESP32
+        self.client_socket.send(comando.encode())
+
+        # Aguarda a resposta do ESP32
+        resposta = self.client_socket.recv(1024).decode()
+        print("Resposta do ESP32:", resposta)
+
+
+        #self.client_socket.send(command.encode())
 
     def espresult(self):
         return self.client_socket.recv(1024).decode()
