@@ -17,7 +17,8 @@ def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas,devices):
 
             if arearesult[2]:
                 for device in devices:
-                    if device.infos("name") == arearesult(1):
+                    print(device.espresult())
+                    if device.infos("name") == arearesult[1]:
                         device.execute(arearesult[0])
 
         except Exception as erro:
