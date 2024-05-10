@@ -95,3 +95,6 @@ class Dispositivo:
         return infos[search]
     def execute(self,command):
         self.client_socket.send(command.encode())
+
+    def espresult(self):
+        return self.client_socket.recv(1024).decode()

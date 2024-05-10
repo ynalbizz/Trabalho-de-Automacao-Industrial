@@ -15,7 +15,7 @@ detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 graph = Aux.Graph("Teste")
 
 devices = [
-Aux.Dispositivo("192.168.0.110",1234,"ventilador")
+Aux.Dispositivo("192.168.0.100",1234,"ventilador")
 
 
 ]
@@ -31,7 +31,8 @@ while True:
 
     area = [
         # lista de Areas
-        Aux.Area((100, 100), 100, 100, img,"ligar",)
+        Aux.Area((100, 100), 100, 100, img,"ligar","ventilador")
+
 
     ]
 
