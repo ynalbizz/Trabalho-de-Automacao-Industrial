@@ -14,11 +14,7 @@ detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 # Creating Graph Base and configs to debugging
 graph = Aux.Graph("Teste")
 
-devices = [
-Aux.Dispositivo("192.168.0.100",1234,"ventilador")
 
-
-]
 
 # Continuously get frames from the webcam
 while True:
@@ -60,7 +56,7 @@ while True:
         #graph.plotGraph_Y_byTime(length)
 
         # Check if the hand was made some gesture
-        GestLib.onehandcontroller(handType1, fingers1, length, center1, area,devices)
+        GestLib.onehandcontroller(handType1, fingers1, length, center1, area)
 
 
     # Check if a second hand was detected

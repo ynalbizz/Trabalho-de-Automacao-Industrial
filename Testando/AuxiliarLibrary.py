@@ -6,10 +6,6 @@ import socket
 # Initial setup
 
 
-def printinfos(variabels):
-    print(variabels)
-
-
 def handlocationverifiying(handPos, area):
 
     origin = area["origin"]
@@ -34,11 +30,11 @@ class Area:
     def infos(self, info="all"):
 
         infos = {
-         "origin": self.origin,
-         "end": self.end,
-         "width": self.width,
-         "height": self.height,
-         "centerpos": self.centerpos
+            "origin": self.origin,
+            "end": self.end,
+            "width": self.width,
+            "height": self.height,
+            "centerpos": self.centerpos
         }
         if info == "all":
             return infos
@@ -94,17 +90,24 @@ class Dispositivo:
         infos = {"ip": self.ip,"port": self.port,"name": self.name}
         return infos[search]
     def execute(self,command):
-        comando = input("Digite 'ligar' para ligar o LED ou 'desligar' para desligar o LED: ").lower()
-
-        # Envia o comando para o ESP32
-        self.client_socket.send(comando.encode())
-
-        # Aguarda a resposta do ESP32
-        resposta = self.client_socket.recv(1024).decode()
-        print("Resposta do ESP32:", resposta)
-
-
-        #self.client_socket.send(command.encode())
+        self.client_socket.send(command.encode())
 
     def espresult(self):
         return self.client_socket.recv(1024).decode()
+
+
+class OnOffSwitch:
+    def __init__(self):
+        self.state = False  # Estado inicial: desligado
+        self.last_toggle_time = 0  # Tempo do último toggle
+
+    def toggle(self):
+        current_time = time.time()
+        if current_time - self.last_toggle_time >= 5:  # Verifica se passaram pelo menos 5 segundos
+            self.state = not self.state  # Inverte o estado atual
+            self.last_toggle_time = current_time  # Atualiza o tempo do último toggle
+        else:
+            print("Aguarde 5 segundos para usar o toggle novamente.")
+
+    def is_on(self):
+        return self.state
