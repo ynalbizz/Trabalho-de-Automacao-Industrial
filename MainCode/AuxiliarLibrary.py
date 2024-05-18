@@ -1,21 +1,12 @@
 import cv2
 import matplotlib.pyplot as plt
 import time
-import socket
 
 # Initial setup
 
 
-def handlocationverifiying(handPos, area):
-
-    origin = area["origin"]
-    end = area["end"]
-    if origin[0] <= handPos[0] <= end[0] and origin[1] <= handPos[1] <= end[1]:
-        return True
-
-
 class Area:
-    def __init__(self, centerpos, width, height, img, action,device):
+    def __init__(self, centerpos, width, height, img, device):
         self.img = img
         self.width = width
         self.height = height
@@ -24,7 +15,6 @@ class Area:
         end = (centerpos[0]+width, centerpos[1]+height)
         self.origin = origin
         self.end = end
-        self.action = action
         self.device = device
 
     def infos(self, info="all"):
@@ -49,19 +39,19 @@ class Area:
         return self.origin[0] <= handPos[0] <= self.end[0] and self.origin[1] <= handPos[1] <= self.end[1]
 
     def execute(self, handPos):
-        if self._isHandInside(handPos):
-            return (str(self.action).lower(), self.device, True)
+            return self.device, self._isHandInside(handPos)
 
 
 class Graph:
-    def __init__(self,title):
-        self.fig, self.ax = plt.subplots(facecolor=("#eeeee4"))
+    def __init__(self, title):
+        self.fig, self.ax = plt.subplots(facecolor="#eeeee4")
         self.times = []
         self.ydata = []
         (self.start_time, self.line) = (time.time(), self.ax.plot(self.times, self.ydata, 'r')[0])
 
         self.fig.suptitle(title)
-    def plotGraph_Y_byTime(self,y):
+
+    def plotGraph_Y_byTime(self, y):
 
         if y:
             current_time = time.time() - self.start_time  # Time elapsed since start
@@ -78,36 +68,3 @@ class Graph:
 
             return
     plt.pause(0.1)
-
-class Dispositivo:
-    def __init__(self,esp_ip,port,device_name):
-        self.name = device_name
-        self.ip = str(esp_ip)
-        self.port = port
-        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client_socket.connect((esp_ip,port))
-    def infos(self,search):
-        infos = {"ip": self.ip,"port": self.port,"name": self.name}
-        return infos[search]
-    def execute(self,command):
-        self.client_socket.send(command.encode())
-
-    def espresult(self):
-        return self.client_socket.recv(1024).decode()
-
-
-class OnOffSwitch:
-    def __init__(self):
-        self.state = False  # Estado inicial: desligado
-        self.last_toggle_time = 0  # Tempo do último toggle
-
-    def toggle(self):
-        current_time = time.time()
-        if current_time - self.last_toggle_time >= 5:  # Verifica se passaram pelo menos 5 segundos
-            self.state = not self.state  # Inverte o estado atual
-            self.last_toggle_time = current_time  # Atualiza o tempo do último toggle
-        else:
-            print("Aguarde 5 segundos para usar o toggle novamente.")
-
-    def is_on(self):
-        return self.state

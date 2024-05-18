@@ -15,7 +15,6 @@ detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 graph = Aux.Graph("Teste")
 
 
-
 # Continuously get frames from the webcam
 while True:
     # Capture each frame from the webcam
@@ -27,7 +26,7 @@ while True:
 
     area = [
         # lista de Areas
-        Aux.Area((100, 100), 100, 100, img,"ligar","ventilador")
+        Aux.Area((100, 100), 100, 100, img, "ventilador")
 
 
     ]
@@ -53,11 +52,10 @@ while True:
         length, info, img = detector.findDistance(lmList1[8][0:2], lmList1[4][0:2], img, color=(255, 0, 255), scale=10)
 
         # Pick up data, and plot the graph
-        #graph.plotGraph_Y_byTime(length)
+        # graph.plotGraph_Y_byTime(length)
 
         # Check if the hand was made some gesture
         GestLib.onehandcontroller(handType1, fingers1, length, center1, area)
-
 
     # Check if a second hand was detected
     if len(hands) == 2:
@@ -71,7 +69,6 @@ while True:
 
     # Display the image in a window
     cv2.imshow("Image", img)
-
 
     # Keep the window open and update it for each frame; wait for 1 millisecond between frames
     cv2.waitKey(1)
