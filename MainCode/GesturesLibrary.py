@@ -15,8 +15,9 @@ def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas):
 
     for area in areas:
         if area._isHandInside(handpos):
-            if fingers == [0, 1, 0, 0, 0]:
-                area.device._ToggleState()
+            if area.device and area.device.state != None:
+                if fingers == [0, 1, 0, 0, 0]:
+                    area.device._ToggleState()
 
 
     # Delimita a detecção dos gestos referente a mão esquerda

@@ -14,8 +14,8 @@ detector = HandDetector(staticMode=False, modelComplexity=1, detectionCon=0.8)
 # Creating Graph Base and configs to debugging
 graph = Aux.Graph("Teste")
 
-#Instance Devices
-ventilador = Aux.Device("192.168.0.106")
+#Devices
+ventilador = Aux.Device("192.168.0.108","Ventilador")
 # Continuously get frames from the webcam
 while True:
     # Capture each frame from the webcam
@@ -27,7 +27,7 @@ while True:
 
     area = [
         # lista de Areas
-        Aux.Area((100, 100), 100, 100, img, ventilador)
+        Aux.Area((100, 100), 100, 100, img)
 
 
     ]

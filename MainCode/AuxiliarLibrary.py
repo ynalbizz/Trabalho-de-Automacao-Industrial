@@ -7,7 +7,7 @@ import time
 port = 1234
 
 class Area:
-    def __init__(self, centerpos, width, height, img, device):
+    def __init__(self, centerpos, width, height, img, device=None):
         self.img = img
         self.width = width
         self.height = height
@@ -70,7 +70,7 @@ class Graph:
 
 
 class Device:
-    def __init__(self, ip, cooldown=5):
+    def __init__(self, ip, name=None, cooldown=5):
         # name the device
         # create a socket
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -84,7 +84,8 @@ class Device:
             self.socket.send("statecheck".encode())
             self.state = ('ligado' == self.socket.recv(1024).decode())
         except Exception as e:
-            print("Dispositivo ({}) Ip:({}) Falhou!! \nErro: \n {}".format(device, ip, e))
+            self.state = None
+            print("Dispositivo ({}) Ip:({}) Falhou!! \nErro: \n {}".format(name, ip, e))
 
     def _ToggleState(self):
         current_time = time.time()
