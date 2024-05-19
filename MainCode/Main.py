@@ -27,7 +27,7 @@ while True:
 
     area = [
         # lista de Areas
-        Aux.Area((100, 100), 100, 100, img)
+        Aux.Area((100, 100), 100, 100, img, ventilador)
 
 
     ]
