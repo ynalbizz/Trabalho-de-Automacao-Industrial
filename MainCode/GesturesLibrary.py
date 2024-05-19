@@ -1,7 +1,4 @@
-from EspCodes import *
-
-Devices = [Device("ventilador", "192.168.0.106")]
-
+from AuxiliarLibrary import Device
 
 def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas):
 
@@ -15,13 +12,11 @@ def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas):
             # c.write(b'A')
             print("Rg2")
 
+
     for area in areas:
-        arearesult = area.execute(handpos)
-        if arearesult[1]:
-            for device in Devices:
-                if device.name() == arearesult[0]:
-                    if fingers == [0, 1, 0, 0, 0]:
-                        device._ToggleState()
+        if area._isHandInside(handpos):
+            if fingers == [0, 1, 0, 0, 0]:
+                area.device._ToggleState()
 
 
     # Delimita a detecção dos gestos referente a mão esquerda

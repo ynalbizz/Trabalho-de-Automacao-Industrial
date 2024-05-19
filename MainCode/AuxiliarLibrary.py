@@ -1,9 +1,10 @@
 import cv2
 import matplotlib.pyplot as plt
+import socket
 import time
 
 # Initial setup
-
+port = 1234
 
 class Area:
     def __init__(self, centerpos, width, height, img, device):
@@ -38,8 +39,6 @@ class Area:
     def _isHandInside(self, handPos):
         return self.origin[0] <= handPos[0] <= self.end[0] and self.origin[1] <= handPos[1] <= self.end[1]
 
-    def execute(self, handPos):
-            return self.device, self._isHandInside(handPos)
 
 
 class Graph:
@@ -68,3 +67,35 @@ class Graph:
 
             return
     plt.pause(0.1)
+
+
+class Device:
+    def __init__(self, ip, cooldown=5):
+        # name the device
+        # create a socket
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.cooldown = cooldown  # cooldown in seconds
+        self.last_toggle_time = 0  # time of the last state change
+
+        # try to connect to the device
+        try:
+            print(ip)
+            self.socket.connect((ip, port))
+            self.socket.send("statecheck".encode())
+            self.state = ('ligado' == self.socket.recv(1024).decode())
+        except Exception as e:
+            print("Dispositivo ({}) Ip:({}) Falhou!! \nErro: \n {}".format(device, ip, e))
+
+    def _ToggleState(self):
+        current_time = time.time()
+        if current_time - self.last_toggle_time < self.cooldown:
+            print(f"Cooldown ativo. Aguarde {self.cooldown - (current_time - self.last_toggle_time):.2f} segundos.")
+            return
+
+        if self.state:
+            self.socket.send("desligar".encode())
+        else:
+            self.socket.send("ligar".encode())
+
+        self.state = not self.state
+        self.last_toggle_time = current_time
