@@ -1,39 +1,27 @@
-from AuxiliarLibrary import Device
+from Areas import areasList
+import Profiles
 
-def onehandcontroller(hand, fingers, clampfingersdist, handpos, areas):
+def controller(hands,distbetweenhands):
+    for hand in hands:
+        if Profiles.currentProfile == 2:
+            if areasList['Area1']._isHandInside(hand['center']):
+                print('vc é incrivel')
 
-    # Delimita a detecção dos gestos referente a mão direita
-    if hand == "Right":
-        # Adiciona lógica para ligar o LED quando o gesto for detectado
-        if fingers == [0, 1, 0, 0, 0]:
-            print("Rg1")
+            # Delimita a detecção dos gestos referente a mão direita
+            if hand['type'] == "Right":
+                # Execulta ação quando gesto for detectado
+                if hand['fingers'] == [0, 1, 0, 0, 0]:
+                    print("Right Gesture 1")
+                    Profiles._setProfile(2)
 
-        if fingers == [0, 1, 1, 0, 0]:
-            # c.write(b'A')
-            print("Rg2")
-
-
-    for area in areas:
-        if area._isHandInside(handpos):
-            if area.device and area.device.state != None:
-                if fingers == [0, 1, 0, 0, 0]:
-                    area.device._ToggleState()
+            # Delimita a detecção dos gestos referente a mão esquerda
+            if hand['type']  == "Left":
+                # Execulta ação quando gesto for detectado
+                if hand['fingers'] == [0, 1, 0, 0, 0]:
+                    # c.write(b'K')
+                    print("Left Gesture 1")
+                    Profiles._setProfile(3)
 
 
-    # Delimita a detecção dos gestos referente a mão esquerda
-    if hand == "Left":
-        # Adiciona lógica para desligar o LED quando o gesto for detectado
-        if fingers == [0, 1, 0, 0, 0]:
-            # c.write(b'K')
-            print("Lg1")
-
-        if fingers == [0, 1, 1, 0, 0]:
-            # c.write(b'B')
-            print("Lg2")
-        
-
-def twohandcontroller(distbetweenhands):
-
-    # Adiciona novos gestos Exclusivos para Duas
-    if distbetweenhands >= 100:
+    if distbetweenhands != None and distbetweenhands >= 10:
         print("maior que 10cm")
